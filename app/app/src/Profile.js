@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Container, Row, Col, Jumbotron, Table, Form, Button } from 'react-bootstrap'
-import Loader from 'react-loader-spinner'
+import { Bars } from 'react-loader-spinner'
 import { Redirect } from 'react-router-dom'
 import { Auth } from './utils/Auth'
 import { User } from './utils/User'
@@ -107,7 +107,7 @@ export class Profile extends Component {
                                                     {
                                                         this.state.disable_form
                                                         ?
-                                                        <Loader
+                                                        <Bars
                                                             type="TailSpin"
                                                             color="#fff"
                                                             height={28}

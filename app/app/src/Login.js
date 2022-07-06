@@ -1,7 +1,7 @@
 import 'react-notifications/lib/notifications.css';
 import React, { Component } from 'react'
 import { Container, Row, Col, Card, Jumbotron, Form, Button } from 'react-bootstrap'
-import Loader from 'react-loader-spinner'
+import { Bars } from 'react-loader-spinner'
 import { Redirect } from 'react-router-dom'
 import { Auth } from './utils/Auth'
 import { Ping } from './utils/Ping'
@@ -127,7 +127,7 @@ export class Login extends Component {
                                                     {
                                                         this.state.disable_form
                                                         ?
-                                                        <Loader
+                                                        <Bars
                                                             type="TailSpin"
                                                             color="#fff"
                                                             height={28}
