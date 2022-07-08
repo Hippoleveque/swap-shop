@@ -1,5 +1,4 @@
 import os
-import ldap
 import time
 import datetime
 
@@ -17,14 +16,6 @@ from ..utils.hash import sha256, hash_id
 from ..model.User import User
 from ..model.Token import Token
 
-
-LDAP_SCHEME = os.environ.get("LDAP_SCHEME")
-LDAP_HOST = os.environ.get("LDAP_HOST")
-LDAP_PORT = os.environ.get("LDAP_PORT")
-LDAP_ENDPOINT = "{}://{}:{}".format(LDAP_SCHEME, LDAP_HOST, LDAP_PORT)
-LDAP_USERS_DN = os.environ.get("LDAP_USERS_DN")
-LDAP_ADMIN_DN = os.environ.get("LDAP_ADMIN_DN")
-LDAP_ADMIN_PASSWORD = os.environ.get("LDAP_ADMIN_PASSWORD")
 
 def requires_authentication(f):
     """
@@ -54,6 +45,7 @@ class AuthService():
     @staticmethod
     def authLDAPUser(username: str, password: str):
         response = ApiResponse()
+        """
         user_details = AuthService.checkLDAPCredentials(username, password)
         if user_details is not False:
             username = user_details[0][1]["uid"][0].decode('utf-8')
@@ -87,12 +79,14 @@ class AuthService():
 
         else:
             response.setMessage("Invalid username or password")
+            """
         return response
 
     @staticmethod
     def checkLDAPCredentials(username: str, password: str):
         return_value = False
         search_filter = "(&(uid={})(objectClass=inetOrgPerson))".format(username)
+        """
         try:
             ldap.set_option(ldap.OPT_X_TLS_REQUIRE_CERT, ldap.OPT_X_TLS_NEVER)
             connection = ldap.initialize(LDAP_ENDPOINT)
@@ -107,7 +101,9 @@ class AuthService():
         except ldap.LDAPError as e:
             logger.debug("[AuthService.checkLDAPCredentials] Can't perform LDAP authentication for " + username)
             logger.debug(e)
-        return result if return_value is not False else False
+            """
+        #return result if return_value is not False else False
+        return False
 
     @staticmethod
     def checkToken(token_value: str):

@@ -1,5 +1,4 @@
 import os
-import ldap
 import json
 import datetime
 from validate_email import validate_email
@@ -11,14 +10,6 @@ from ..utils.ApiResponse import ApiResponse
 from ..model.User import User
 from ..model.Token import Token
 
-
-LDAP_SCHEME = os.environ.get("LDAP_SCHEME")
-LDAP_HOST = os.environ.get("LDAP_HOST")
-LDAP_PORT = os.environ.get("LDAP_PORT")
-LDAP_ENDPOINT = "{}://{}:{}".format(LDAP_SCHEME, LDAP_HOST, LDAP_PORT)
-LDAP_USERS_DN = os.environ.get("LDAP_USERS_DN")
-LDAP_ADMIN_DN = os.environ.get("LDAP_ADMIN_DN")
-LDAP_ADMIN_PASSWORD = os.environ.get("LDAP_ADMIN_PASSWORD")
 
 class UserService():
     
@@ -54,6 +45,8 @@ class UserService():
         database.
         """
         response = ApiResponse()
+        """
+
         search_filter = "(&(uid={})(objectClass=inetOrgPerson))".format(user.username)
         try:
             ldap.set_option(ldap.OPT_X_TLS_REQUIRE_CERT, ldap.OPT_X_TLS_NEVER)
@@ -87,6 +80,8 @@ class UserService():
         except ldap.LDAPError as e:
             logger.debug("[AuthService.updateLDAPUser] Can't perform LDAP search")
             logger.debug(e)
+
+            """
         return response
 
     @staticmethod
